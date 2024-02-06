@@ -1,3 +1,11 @@
+/*
+* File: add.c
+* The code is about adding the patient details
+* In this we are adding the patient details which uses a function.
+* In this code we are adding patient name,Date of Birth,gender.
+* And this details will be printed in the .txt file,with the help of files concept.
+
+*/
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,11 +20,12 @@ void addPatient(struct Patient patients[], int *patientCount) {
     printf("Enter patient details:\n");
 
     // Use a label to allow for re-entering the name in case of invalid characters
-    label1:
+
     while (1) {
+            label1:
         // Prompt the user to enter the patient's name
         printf("Name: ");
-        scanf("%s", patient.name);
+        scanf(" %[^\n]", patient.name);
 
         // Validate the characters in the name
         int i = 0;
@@ -27,6 +36,7 @@ void addPatient(struct Patient patients[], int *patientCount) {
                 printf("Enter valid characters for the name.\n");
                 break;
             }
+
         }
 
         // If invalid characters are found, re-enter the name
@@ -91,7 +101,7 @@ void addPatient(struct Patient patients[], int *patientCount) {
 
     // Write patient details to the file
     fprintf(file, "%d %s %s %c\n", patient.id, patient.name, patient.dob, patient.gender);
-    
+
     // Close the file
     fclose(file);
 
