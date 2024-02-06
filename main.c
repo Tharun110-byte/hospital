@@ -12,11 +12,7 @@
  * - This file contains the main function and serves as the entry point for the program.
  * - It includes necessary header files, defines constants, and implements the main menu loop.
  *
- * Usage:
- * - Compile the program using a C compiler (e.g., gcc).
- * - Execute the compiled binary to run the hospital management system.
- * - Follow the on-screen prompts to add patients, schedule appointments, and exit the program.
- *
+
  * Note: This program is for educational purposes and may require additional enhancements
  * for real-world use cases such as error handling, data validation, and persistence.
  */
