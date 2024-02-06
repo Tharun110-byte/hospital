@@ -1,3 +1,11 @@
+/*
+ * File: appointments.c
+ * Description: This file contains functions related to scheduling appointments.
+ *              It includes a function to schedule an appointment for a patient.
+ *              Input validation is performed for patient ID, date of birth, and appointment time.
+ *  after entering the details it will print in the .txt file
+   */
+
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
