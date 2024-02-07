@@ -10,11 +10,33 @@
 #include <stdlib.h>
 #include <string.h>
 #include "main.h"
-
+// Function to get the maximum ID from existing patient data in the file
+int getMaxID() {
+    FILE *file = fopen("patients.txt", "r");
+    int maxID = 0;
+    if (file != NULL) {
+        int id;
+        char name[100], dob[12], gender;
+        while (fscanf(file, "%d %s %s %c", &id, name, dob, &gender) != EOF) {
+            if (id > maxID) {
+                maxID = id;
+            }
+        }
+        fclose(file);
+    } else {
+        printf("Unable to open file for reading patient data.\n");
+    }
+    return maxID;
+}
 
 void addPatient(struct Patient patients[], int *patientCount) {
     // Declare a local variable of type Patient to store information for the new patient
     struct Patient patient;
+     // Get the maximum ID from existing patient data
+    int maxID = getMaxID();
+
+    // Assign a unique ID to the patient
+    patient.id = maxID + 1;
 
     // Prompt the user to enter patient details
     printf("Enter patient details:\n");
@@ -85,9 +107,6 @@ void addPatient(struct Patient patients[], int *patientCount) {
         }
     }
 
-    // Assign a unique ID to the patient
-    patient.id = *patientCount + 1;
-
     // Display the entered patient details
     printf("Entered patient details\n");
     printf("ID    : %d\nName  : %s\nDOB   : %s\nGender: %c\n", patient.id, patient.name, patient.dob, patient.gender);
@@ -105,10 +124,7 @@ void addPatient(struct Patient patients[], int *patientCount) {
     // Close the file
     fclose(file);
 
-    // Add the patient to the array of patients and increment the patient count
-    patients[*patientCount] = patient;
-    (*patientCount)++;
-
     // Display a success message
     printf("Patient added successfully.\n");
 }
+
