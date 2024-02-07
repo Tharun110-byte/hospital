@@ -19,3 +19,10 @@
     Function Prototypes:
     - void addPatient(struct Patient patients[], int *patientCount);
     - void scheduleAppointment(struct Appointment appointments[], int *appointmentCount, struct Patient patients[], int patientCount);
+  
+   
+* File: add.c
+* The code is about adding the patient details
+* In this we are adding the patient details which uses a function.
+* In this code we are adding patient name,Date of Birth,gender.
+* And this details will be printed in the .txt file,with the help of files concept. 
