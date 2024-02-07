@@ -25,4 +25,10 @@
 * The code is about adding the patient details
 * In this we are adding the patient details which uses a function.
 * In this code we are adding patient name,Date of Birth,gender.
-* And this details will be printed in the .txt file,with the help of files concept. 
+* And this details will be printed in the .txt file,with the help of files concept.
+
+* File: appointments.c
+ * Description: This file contains functions related to scheduling appointments.
+ *              It includes a function to schedule an appointment for a patient.
+ *              Input validation is performed for patient ID, date of birth, and appointment time.
+ *  after entering the details it will print in the .txt file
