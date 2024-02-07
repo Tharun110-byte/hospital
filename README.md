@@ -10,3 +10,12 @@
  * File: main.c
  * - This file contains the main function and serves as the entry point for the program.
  * - It includes necessary header files, defines constants, and implements the main menu loop.
+   - 
+  
+ *  The program includes constants for maximum name length and maximum records to
+    control the size of data structures. It uses structures to represent dates,
+    patients, and appointments, each with specific attributes.
+
+    Function Prototypes:
+    - void addPatient(struct Patient patients[], int *patientCount);
+    - void scheduleAppointment(struct Appointment appointments[], int *appointmentCount, struct Patient patients[], int patientCount);
