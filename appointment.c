@@ -4,15 +4,14 @@
  *              It includes a function to schedule an appointment for a patient.
  *              Input validation is performed for patient ID, date of birth, and appointment time.
  *  after entering the details it will print in the .txt file
-   */
+*/
 
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "main.h"
 
-// Function to schedule an appointment
-void scheduleAppointment(struct Appointment appointments[], int *appointmentCount, struct Patient patients[], int patientCount) {
+void scheduleAppointment(struct Appointment appointments[], int *appointmentCount) {
     // Declare a local variable of type Appointment to store information for the new appointment
     struct Appointment appointment;
 
@@ -23,41 +22,62 @@ void scheduleAppointment(struct Appointment appointments[], int *appointmentCoun
     printf("Enter patient ID: ");
     scanf("%d", &appointment.patientId);
 
-    // Check if the patient ID is valid
-    if (appointment.patientId <= 0 || appointment.patientId > patientCount) {
-        printf("Invalid patient ID. Please enter a valid patient ID.\n");
+    // Open the file "patients.txt" for reading
+    FILE *patientsFile = fopen("patients.txt", "r");
+    if (patientsFile == NULL) {
+        printf("Error opening patients file.\n");
+        return;
+    }
+
+    // Check if the patient ID is present in the patients file
+    int patientFound = 0;
+    int id;
+    char name[100], dob[20], gender;
+    while (fscanf(patientsFile, "%d %s %s %c", &id, name, dob, &gender) != EOF) {
+        if (id == appointment.patientId) {
+            patientFound = 1;
+            break;
+        }
+    }
+
+    // Close the patients file
+    fclose(patientsFile);
+
+    // If patient ID not found, display an error message and return
+    if (!patientFound) {
+        printf("Patient ID not found. Please enter a valid patient ID.\n");
         return;
     }
 
     // Assign a unique ID to the appointment
     appointment.id = *appointmentCount + 1;
+    // Prompt the user to choose the type of appointment
+    printf("Choose the type of appointment:\n");
+    printf("1. Optician\n");
+    printf("2. Ophthalmologist\n");
+    printf("3. Optometrist\n");
+    printf("Enter your choice: ");
+    int choice;
+    scanf("%d", &choice);
 
-    // Use a loop to prompt the user for a valid date of birth format
-    while (1) {
-        // Prompt the user to enter the date of birth
-        printf("Date of Birth (YYYY-MM-DD): ");
-        scanf("%s", appointment.dob);
-
-        // Validate the format of the date of birth
-        if (strlen(appointment.dob) == 10 &&
-            appointment.dob[4] == '-' && appointment.dob[7] == '-' &&
-            isdigit(appointment.dob[0]) && isdigit(appointment.dob[1]) &&
-            isdigit(appointment.dob[2]) && isdigit(appointment.dob[3]) &&
-            isdigit(appointment.dob[5]) && isdigit(appointment.dob[6]) &&
-            isdigit(appointment.dob[8]) && isdigit(appointment.dob[9]) &&
-            (appointment.dob[5] == '0' || appointment.dob[5] == '1') && // Check for valid month
-            ((appointment.dob[5] == '0' && appointment.dob[6] >= '1' && appointment.dob[6] <= '9') ||
-             (appointment.dob[5] == '1' && appointment.dob[6] >= '0' && appointment.dob[6] <= '2')) && // Check for valid day
-            (appointment.dob[8] >= '0' && appointment.dob[8] <= '3') && // Check for valid year (decade)
-            (appointment.dob[9] >= '0' && appointment.dob[9] <= '9')) { // Check for valid year (unit)
-            break; // Exit the loop if the input is valid
-        } else {
-            printf("Invalid date of birth format or values. Please enter in YYYY-MM-DD format with valid month and day.\n");
-        }
+    // Set the type of appointment based on the user's choice
+    switch (choice) {
+        case 1:
+            strcpy(appointment.type, "Optician");
+            break;
+        case 2:
+            strcpy(appointment.type, "Ophthalmologist");
+            break;
+        case 3:
+            strcpy(appointment.type, "Optometrist");
+            break;
+        default:
+            printf("Invalid choice.\n");
+            return;
     }
 
     // Prompt the user to enter the appointment time
-    printf("Time: ");
+    printf("Time(9:00 to 5:00): ");
     scanf("%s", appointment.time);
 
     // Open the file "appointments.txt" for appending
@@ -68,14 +88,11 @@ void scheduleAppointment(struct Appointment appointments[], int *appointmentCoun
     }
 
     // Write appointment details to the file
-    fprintf(file, "%d %d %s %s\n", appointment.id, appointment.patientId, appointment.dob, appointment.time);
+    fprintf(file, "%d %s %s\n", appointment.patientId, appointment.time, appointment.type);
 
     // Close the file
     fclose(file);
 
-    // Add the appointment to the array of appointments and increment the appointment count
-    appointments[*appointmentCount] = appointment;
-    (*appointmentCount)++;
 
     // Display a success message
     printf("Appointment scheduled successfully.\n");
