@@ -17,6 +17,8 @@
     Note: The date of birth (dob) is expected to be formatted as "dd/mm/yyyy" in both
     the Patient and Appointment structures.
 
+
+
     Feel free to modify and extend the program according to specific requirements.
 */
 
@@ -48,11 +50,14 @@ struct Patient {
 struct Appointment {
     int id;
     int patientId;
-    char dob[12];
+     char type[20];
     char time[10];
 };
 
 // Function prototypes
 void addPatient(struct Patient patients[], int *patientCount);
-void scheduleAppointment(struct Appointment appointments[], int *appointmentCount, struct Patient patients[], int patientCount);
+void scheduleAppointment(struct Appointment appointments[], int *appointmentCount);
+int getMaxID();
+void display();
+void display2();
 
